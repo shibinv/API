@@ -10,7 +10,7 @@ class API {
     
     //database object
     private $db;
-    
+    //Comment by the amazing Quentin McMullen
     
     /*
      * Class Constructor
