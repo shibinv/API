@@ -41,7 +41,7 @@ class API {
      * based on input string
      */
     protected function Search($str) {
-        return $obj;
+        
     }
     
     /*
@@ -49,7 +49,12 @@ class API {
      * based on input string 
      */
     protected function Course($str) {
-        return $obj;
+        $stmt = $this->db->query('SELECT * FROM department, course_detail WHERE '
+                . 'course_detail.department_id = department.department_id '
+                . 'AND department.dept_subject = "'  . $str .'"');
+       
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
     }
     
     /*
@@ -57,7 +62,7 @@ class API {
      * based on input string
      */
     protected function Section($str) {
-        return $obj;
+        //$stmt = $this->db->query('SELECT * FROM course WHERE course')
     }
     
     /*
@@ -80,4 +85,11 @@ class API {
     protected function Error($str) {
         return $str;
     }
+    
+    protected function Dept(){
+        $stmt = $this->db->query('SELECT dept_id, dept_subject FROM department');
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    
 }
