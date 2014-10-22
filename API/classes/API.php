@@ -4,7 +4,7 @@
  * API Class
  * procceses requests and returns JSON
  *
- * @author Shibin
+ * @author Navsquire Team Members
  */
 class API {
     
@@ -34,11 +34,11 @@ class API {
         try {
             // connect to the database
             $this->db = new PDO('mysql:host=localhost;dbname=hawknest;charset=utf8', $user, $pass);
-            // throw exceptions
+            // set PDO to throw exceptions
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
         } catch(PDOException $ex) {
-            $result = $this->Error($ex);
+            $result = $this->Error($ex->getMessage());
             $this->json = $this->SerializeJSON($result);
             echo $this->json;
             die; // stop further processing 
@@ -144,14 +144,12 @@ class API {
         // 
         if ($request == 'deparment') {
             $this->json = $this->Dept();
-        }
-        
-        if ($request == 'course') {
+        } elseif ($request == 'course') {
             $this->json = $this->Course($value);
-        }
-        
-        if ($request == 'section') {
+        } elseif ($request == 'section') {
             $this->json = $this->Section($value);
+        } else {
+            $this->json = $this->Error('Unknown Request');
         }
         
         return $this->json;
@@ -162,7 +160,7 @@ class API {
             $stmt = $this->db->query($sql);
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $ex) {
-            $result = $this->Error($ex);
+            $result = $this->Error($ex->getMessage());
         }
         // return as a json string
         return $this->SerializeJSON($result);
