@@ -7,9 +7,10 @@ require_once('classes/API.php');
 
 
 // used to figure out what the request is for
-$request = $_GET['request'];
+$request = filter_input(INPUT_GET, 'request');
+
 // value thats being passed in if needed
-$value = $_GET['value'];
+$value = filter_input(INPUT_GET, 'value');
 
 // check if request is null
 if ($request == '') {
