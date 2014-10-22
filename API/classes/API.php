@@ -131,14 +131,8 @@ class API {
      * Ex: result[0] = array('dept_id' => '1', 'dept_subject' => 'CINF'); 
      */
     protected function Dept(){
-        try {
-            $stmt = $this->db->query('SELECT dept_id, dept_subject FROM department');
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $ex) {
-            $this->SerializeJSON(array('Error' => $ex->getMessage()) );
-        }
-        
-        return $result;
+        $sql = "SELECT dept_id, dept_subject FROM department";
+        $this->Query($sql);
     }
     
     /*
