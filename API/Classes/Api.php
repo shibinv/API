@@ -77,7 +77,7 @@ class Api {
      * Ex: result[0] = array('dept_id' => '1', 'dept_subject' => 'CINF'); 
      */
     protected function Dept(){
-        $sql = "SELECT dept_id, dept_subject FROM department";
+        $sql = "SELECT dept_id, dept_subject FROM department ORDER BY dept_subject";
         $this->Query($sql);
     }
     
@@ -112,7 +112,7 @@ class Api {
         if ($str != '') {
             $sql .= " WHERE dept_subject = '$str'";
         }
-        
+        $sql .= " ORDER BY course_number"; // sort them so its easier to read
         $this->Query($sql);
     }
     
@@ -125,7 +125,7 @@ class Api {
             $this->Error('Section Request must contain value={department}, and value2={coursenumber}');
         } else {
             $sql = "SELECT course_section, class_number FROM full_course WHERE dept_subject ='$department'"
-                    . " AND course_number = '$course'";
+                    . " AND course_number = '$course' ORDER BY course_section";
             $this->Query($sql);
         }
     }
