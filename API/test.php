@@ -16,8 +16,8 @@ $value = filter_input(INPUT_GET, 'value');
 // check if request is null
 if ($request == '') {
     $result = array(
-        'status' => 'Error',
-        'message' => 'Bad Call',
+        0 => 'Error',
+        1 => 'Bad Call',
     );
     // send error back to client
     echo json_encode($result); 

@@ -91,8 +91,8 @@ class API {
         } else {
             // otherwise encode a success status into the object 
             $str = array(
-                'status' => 'Success',
-                'result' => $obj,
+                0 => 'Success',
+                1 => $obj,
             );
         }
         // return the serialized object
@@ -115,8 +115,8 @@ class API {
         if ($this->debug == true) {
             // return error status and message
             $error = array(
-                'status' => 'Error', 
-                'message' =>$msg,
+                0 => 'Error', 
+                1 =>$msg,
             );
         } else {
             // return only an error status
