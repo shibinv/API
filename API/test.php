@@ -31,7 +31,9 @@ $api = new API();
 // set debug for testing
 $api->debug = true;
 // return json string back to client
-echo $api->find($request, $value);
+$result = $api->find($request, $value);
+echo $result;
+var_dump($result);
 
 
 
