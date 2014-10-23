@@ -34,7 +34,3 @@ $api->debug = true;
 $result = $api->find($request, $value);
 echo $result;
 var_dump($result);
-
-
-
-
