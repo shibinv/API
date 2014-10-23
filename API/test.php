@@ -30,7 +30,7 @@ if ($request == '') {
 
 
 // create API class
-$api = new Api();
+$api = new Api;
 
 // set debug for testing
 $api->debug = true;
