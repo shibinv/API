@@ -4,7 +4,7 @@ require_once('classes/API.php');
  * Used to test API calls.
  * Will return debugging information
  */
-
+error_reporting(E_ALL);
 
 // used to figure out what the request is for
 $request = filter_input(INPUT_GET, 'request');
