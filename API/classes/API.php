@@ -163,6 +163,7 @@ class API {
             $result = $this->Error($ex->getMessage());
         }
         // return as a json string
+        var_dump($result);
         return $this->SerializeJSON($result);
     }
 }
