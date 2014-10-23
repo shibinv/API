@@ -18,23 +18,14 @@ class Json {
     private $json;
     
     public function Json($obj) {
-        // check if object is an error
-        if (isset($obj['status']) && $obj['status'] == 'Error') {
-            // serialize the error object as is
-            $str = $obj;
-        } else {
-            // otherwise encode a success status into the object 
-            $str = array(
-                'status' => 'Success',
-                'result' => $obj,
-            );
-        }
         // set json var to the serialized object
-        $this->json = json_encode($str);
+        $this->json = json_encode($obj);
     }
     
+    /*
+     * Set json back to driver
+     */
     public function getJson() {
-        Header('Content-type: application/json');
         return $this->json;
     }
     /*
