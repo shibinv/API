@@ -6,7 +6,7 @@
  *
  * @author Navsquire Team Members
  */
-namespace Api;
+namespace Classes\Api;
 
 class Api {
     

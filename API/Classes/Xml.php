@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Api;
+namespace Classes\Xml;
 
 /**
  * Description of Xml

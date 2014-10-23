@@ -1,5 +1,5 @@
 <?php
-namespace Api;
+namespace Classes;
 /*
  * Used to test API calls.
  * Will return debugging information
@@ -30,7 +30,7 @@ if ($request == '') {
 
 
 // create API class
-$api = new API();
+$api = new Api();
 
 // set debug for testing
 $api->debug = true;
