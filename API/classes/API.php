@@ -109,14 +109,14 @@ class API {
     /*
      * Returns errors back to client
      */
-    protected function Error($ex) {
+    protected function Error($msg) {
         
         // check what type to errors to return
         if ($this->debug == true) {
             // return error status and message
             $error = array(
                 'status' => 'Error', 
-                'message' =>$ex->getMessage(),
+                'message' =>$msg,
             );
         } else {
             // return only an error status
