@@ -67,7 +67,9 @@ class Api {
             $this->Section($value, $value2);
         } elseif ($request == 'room') {
             $this->Room($value);
-        } else { // set error if request is invalid
+        } elseif ($request == 'detail') {
+            $this->Detail($value);
+        }else { // set error if request is invalid
             $this->Error('Unknown Request');
         }
     }
@@ -87,9 +89,22 @@ class Api {
      */
     protected function Room($class) {
         if ($class == '') {
-            $this->Error('Room Request must contain value={roomnumber}');
+            $this->Error('Room Request must contain value={classnumber}');
         } else {
             $sql = "SELECT room_xval, room_yval, room_number FROM full_course WHERE class_number = '$class'";
+            $this->Query($sql);
+        }
+    }
+    
+    /*
+     * This returns full details of a course. 
+     * Input is class number
+     */
+    protected function Detail($class) {
+        if ($class == '') {
+            $this->Error('Detail Request must contain value={classnumber}');
+        } else {
+            $sql = "SELECT * FROM full_course WHERE class_number = '$class' ORDER BY class_number";
             $this->Query($sql);
         }
     }
