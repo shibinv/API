@@ -5,6 +5,7 @@ require_once('classes/API.php');
  * Will return debugging information
  */
 error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 // used to figure out what the request is for
 $request = filter_input(INPUT_GET, 'request');
