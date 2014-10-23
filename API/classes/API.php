@@ -95,8 +95,8 @@ class API {
                 'result' => $obj,
             );
         }
-        // return the serialized object
-        return json_encode($str);
+        // set json var to the serialized object
+        $this->json = json_encode($str);
     }
     
     /*
@@ -159,7 +159,7 @@ class API {
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute();
-            $result = $stmt->fetchAll();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $ex) {
             $result = $this->Error($ex->getMessage());
         }
