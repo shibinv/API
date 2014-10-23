@@ -157,8 +157,9 @@ class API {
     
     protected function Query($sql) {
         try {
-            $stmt = $this->db->query($sql);
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll();
         } catch (PDOException $ex) {
             $result = $this->Error($ex->getMessage());
         }
