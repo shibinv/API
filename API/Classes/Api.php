@@ -43,15 +43,15 @@ class Api {
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
         } catch(PDOException $ex) {
-            $this->Error($ex->getMessage());
+            $this->Error('Could not connect to DB: '.$ex->getMessage());
         }
     }
     
     /*
-     * Converts the requests to database calls and 
+     * Converts the requests to database calls; default is department 
      * Results are set to $this->data variable
      */
-    public function Find($request, $value) {
+    public function Find($request = 'department', $value = null, $value2 = null) {
         
         // check if an error already occured
         if ($this->error) {
@@ -64,7 +64,9 @@ class Api {
         } elseif ($request == 'course') {
             $this->Course($value);
         } elseif ($request == 'section') {
-            $this->Section($value);
+            $this->Section($value, $value2);
+        } elseif ($request == 'room') {
+            $this->Room($value);
         } else { // set error if request is invalid
             $this->Error('Unknown Request');
         }
@@ -83,9 +85,13 @@ class Api {
      * Returns an object of the room's location from the database 
      * based on input string
      */
-    protected function Room($str) {
-        $sql = "SELECT room_xval, room_yval FROM room WHERE room_id = $str";
-        return $obj;
+    protected function Room($class) {
+        if ($class == '') {
+            $this->Error('Room Request must contain value={roomnumber}');
+        } else {
+            $sql = "SELECT room_xval, room_yval, room_number FROM full_course WHERE class_number = '$class'";
+            $this->Query($sql);
+        }
     }
     
     /* **** needs further work *****
@@ -99,10 +105,14 @@ class Api {
     
     /*
      * Returns an object of Courses from the database 
-     * based on input string 
+     * filters if an input string is provided
      */
     protected function Course($str) {
-        $sql = "SELECT course_number FROM full_course WHERE dept_subject = '$str'";
+        $sql = "SELECT detail_id, course_number FROM full_course";
+        if ($str != '') {
+            $sql .= " WHERE dept_subject = '$str'";
+        }
+        
         $this->Query($sql);
     }
     
@@ -110,8 +120,14 @@ class Api {
      * Returns an object of Sections from the database 
      * based on input string
      */
-    protected function Section($str) {
-        //$stmt = $this->db->query('SELECT * FROM course WHERE course')
+    protected function Section($department, $course) {
+        if ($department == '' || $course == '') {
+            $this->Error('Section Request must contain value={department}, and value2={coursenumber}');
+        } else {
+            $sql = "SELECT course_section, class_number FROM full_course WHERE dept_subject ='$department'"
+                    . " AND course_number = '$course'";
+            $this->Query($sql);
+        }
     }
     
     /*
@@ -142,7 +158,7 @@ class Api {
             // set $data to result
             $this->data = $result;
         } catch (PDOException $ex) {
-            $this->Error($ex->getMessage());
+            $this->Error('Database Query Error: '.$ex->getMessage());
         } 
     }
     
@@ -151,25 +167,32 @@ class Api {
      * converts data into json and returns it
      */
     public function getJson() {
-        if ($this->error){
-            $json = new Json($this->error);
-        } else {
-            $json = new Json($this->data);
-        }
-        return $json->getJson(); // needs error checking ***** here or in json class
+        $json = new Json($this->BuildData()); // figure out if error or valid data
+        return $json->getJson(); // send to class  to build  // needs error checking ***** here or in json class
     }
     
     /*
      * Call this to get Xml
      */
-    public function getXml() {
+    public function getXml() { 
+        $xml = new Xml($this->BuildData()); // figure out if error or valid data
+        return $xml->getXml(); // send to class  to build 
+    }
+    
+    /*
+     * determine if there is an error and send back error
+     * otherwise send data
+     */
+    private function BuildData() {
         if ($this->error) {
-            $xml = new Xml($this->error);
+            return $this->error;
         } else {
-            $xml = new Xml($this->data);
+            $data = array( // append a success element into the array
+                'status' => 'success',
+                'result' => $this->data
+                );
+            return $data;
         }
-        
-        return $xml->getXml();
     }
     
     public function setDebug($status = false) {

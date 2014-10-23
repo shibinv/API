@@ -34,6 +34,7 @@ class Json {
     }
     
     public function getJson() {
+        Header('Content-type: application/json');
         return $this->json;
     }
     /*

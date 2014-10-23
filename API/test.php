@@ -6,6 +6,8 @@ require_once('Classes/Xml.php');
  * Used to test API calls.
  * Will return debugging information
  */
+
+// display all errors for testing
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -18,18 +20,8 @@ $request = filter_input(INPUT_GET, 'request');
 // value thats being passed in if needed
 $value = filter_input(INPUT_GET, 'value');
 
-// check if request is null
-if ($request == '') {
-    $result = array(
-        'status' => 'Error',
-        'message' => 'Bad Call',
-    );
-    // send error back to client
-    echo json_encode($result); 
-    // end the process
-    die;
-}
-
+// value thats being passed in if needed
+$value2 = filter_input(INPUT_GET, 'value2');
 
 // create API class
 $api = new Api();
@@ -37,20 +29,18 @@ $api = new Api();
 // set debug for testing
 $api->setDebug(true);
 
-
 // return json string back to client
-$api->Find($request, $value);
+$api->Find($request, $value, $value2);
 
 // get the appropriate type of data
 if ($type == 'xml') {
+    // set the content type so document is displayed properly
+    header('Content-Type: text/xml');
     $result = $api->getXml();  
 } else {
+    // content type not really needed
+    header('Content-Type: application/json');
     $result = $api->getJson(); // default
 }
-//var_dump($api);
-//echo $result; // send data back to client
-var_dump($result);
 
-
-
-
+echo $result; // send data back to client
