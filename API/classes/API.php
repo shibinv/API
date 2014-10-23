@@ -91,8 +91,8 @@ class API {
         } else {
             // otherwise encode a success status into the object 
             $str = array(
-                0 => 'Success',
-                1 => $obj,
+                'status' => 'Success',
+                'result' => $obj,
             );
         }
         // return the serialized object
@@ -115,8 +115,8 @@ class API {
         if ($this->debug == true) {
             // return error status and message
             $error = array(
-                0 => 'Error', 
-                1 =>$msg,
+                'status' => 'Error', 
+                'message' =>$msg,
             );
         } else {
             // return only an error status
@@ -142,7 +142,7 @@ class API {
     public function find($request, $value) {
         
         // 
-        if ($request == 'deparment') {
+        if ($request == 'department') {
             $this->json = $this->Dept();
         } elseif ($request == 'course') {
             $this->json = $this->Course($value);
