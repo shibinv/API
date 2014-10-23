@@ -108,7 +108,7 @@ class Api {
      * filters if an input string is provided
      */
     protected function Course($str) {
-        $sql = "SELECT detail_id, course_number FROM full_course";
+        $sql = "SELECT course_number FROM full_course";
         if ($str != '') {
             $sql .= " WHERE dept_subject = '$str'";
         }
