@@ -7,6 +7,7 @@
  * @author Navsquire Team Members
  */
 namespace Api;
+
 class Api {
     
     //database object
@@ -14,20 +15,16 @@ class Api {
     // set true when testing
     private $debug = false; 
     
-    // the return string that will be sent back to the client
-    private $return;
+    // this holds the results from the database
+    private $data;
     
-    // type of data to return (json or xml)
-    private $type = 'json';
+    // holds the error information
+    private $error;
     
     /*
      * Class Constructor
      */
-    public function Api($type = 'json') {
-        //change to xml if set
-        if ($type == 'xml') {
-            $this->type = 'xml';
-        }
+    public function Api() {
         
         // connect to the Database
         $this->ConnectDB();
@@ -44,13 +41,42 @@ class Api {
             $this->db = new PDO('mysql:host=localhost;dbname=hawknest;charset=utf8', $user, $pass);
             // set PDO to throw exceptions
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        
+            
         } catch(PDOException $ex) {
-            $result = $this->Error($ex->getMessage());
-            $str = new Json($result);
-            echo $str;
-            die; // stop further processing 
+            $this->Error($ex->getMessage());
         }
+    }
+    
+    /*
+     * Converts the requests to database calls and 
+     * Results are set to $this->data variable
+     */
+    public function Find($request, $value) {
+        
+        // check if an error already occured
+        if ($this->error) {
+            return; // stop further processing
+        }
+        
+        // make the call according to the request
+        if ($request == 'department') {
+            $this->Dept();
+        } elseif ($request == 'course') {
+            $this->Course($value);
+        } elseif ($request == 'section') {
+            $this->Section($value);
+        } else { // set error if request is invalid
+            $this->Error('Unknown Request');
+        }
+    }
+    
+    /* 
+     * returns an array of departments
+     * Ex: result[0] = array('dept_id' => '1', 'dept_subject' => 'CINF'); 
+     */
+    protected function Dept(){
+        $sql = "SELECT dept_id, dept_subject FROM department";
+        $this->Query($sql);
     }
     
     /*
@@ -89,10 +115,6 @@ class Api {
     }
     
     /*
-     * Takes an object and converts to a JSON String
-     */
-    
-    /*
      * Returns errors back to client
      */
     protected function Error($msg) {
@@ -102,43 +124,14 @@ class Api {
             // return error status and message
             $error = array(
                 'status' => 'Error', 
-                'message' =>$msg,
+                'message' => $msg,
             );
         } else {
             // return only an error status
             $error = array('status' => 'Error');
         }
         
-        return $error;
-    }
-    
-    /* 
-     * returns an array of departments
-     * Ex: result[0] = array('dept_id' => '1', 'dept_subject' => 'CINF'); 
-     */
-    protected function Dept(){
-        $sql = "SELECT dept_id, dept_subject FROM department";
-        $this->Query($sql);
-    }
-    
-    /*
-     * Converts the requests to database calls and 
-     * sets results to $json variable
-     */
-    public function Find($request, $value) {
-        
-        // 
-        if ($request == 'department') {
-            $this->Dept();
-        } elseif ($request == 'course') {
-            $this->Course($value);
-        } elseif ($request == 'section') {
-            $this->Section($value);
-        } else { // return an error is request is not valid
-            $this->return = $this->Error('Unknown Request');
-        }
-        
-        return $this->return;
+        $this->error = $error;
     }
     
     protected function Query($sql) {
@@ -146,13 +139,36 @@ class Api {
             $stmt = $this->db->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            // set $data to result
+            $this->data = $result;
         } catch (PDOException $ex) {
-            $result = $this->Error($ex->getMessage());
+            $this->Error($ex->getMessage());
+        } 
+    }
+    
+    /* 
+     * Call this to get Json
+     * converts data into json and returns it
+     */
+    public function getJson() {
+        if ($this->error){
+            $json = new Json($this->error);
+        } else {
+            $json = new Json($this->data);
         }
-        // return as a json string
-        //var_dump($result);
-        if ($this->type == 'json') {
-            $this->return = New Json($result);
+        return $json; // needs error checking ***** here or in json class
+    }
+    
+    /*
+     * Call this to get Xml
+     */
+    public function getXml() {
+        if ($this->error) {
+            $xml = new Xml($this->error);
+        } else {
+            $xml = new Xml($this->data);
         }
+        
+        return $xml;
     }
 }
