@@ -6,7 +6,7 @@
  *
  * @author Navsquire Team Members
  */
-namespace Classes\Api;
+//namespace Classes\Api;
 
 class Api {
     
@@ -156,7 +156,7 @@ class Api {
         } else {
             $json = new Json($this->data);
         }
-        return $json; // needs error checking ***** here or in json class
+        return $json->getJson(); // needs error checking ***** here or in json class
     }
     
     /*
@@ -169,6 +169,12 @@ class Api {
             $xml = new Xml($this->data);
         }
         
-        return $xml;
+        return $xml->getXml();
+    }
+    
+    public function setDebug($status = false) {
+        if ($status == true) {
+            $this->debug = true;
+        }
     }
 }

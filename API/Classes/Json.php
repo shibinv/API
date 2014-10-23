@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Classes\Json;
+//namespace Classes\Json;
 
 /**
  * Description of JSON
@@ -14,6 +14,8 @@ namespace Classes\Json;
  * @author Shibin
  */
 class Json {
+    
+    private $json;
     
     public function Json($obj) {
         // check if object is an error
@@ -28,9 +30,12 @@ class Json {
             );
         }
         // set json var to the serialized object
-        return json_encode($str);
+        $this->json = json_encode($str);
     }
     
+    public function getJson() {
+        return $this->json;
+    }
     /*
      * Takes a JSON string and converts to an Object
      */

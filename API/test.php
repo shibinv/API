@@ -1,5 +1,7 @@
 <?php
-namespace Classes;
+require_once('Classes/Api.php');
+require_once('Classes/Json.php');
+require_once('Classes/Xml.php');
 /*
  * Used to test API calls.
  * Will return debugging information
@@ -30,10 +32,11 @@ if ($request == '') {
 
 
 // create API class
-$api = new Api;
+$api = new Api();
 
 // set debug for testing
-$api->debug = true;
+$api->setDebug(true);
+
 
 // return json string back to client
 $api->Find($request, $value);
@@ -44,8 +47,9 @@ if ($type == 'xml') {
 } else {
     $result = $api->getJson(); // default
 }
-echo $result; // send data back to client
-//var_dump($result);
+//var_dump($api);
+//echo $result; // send data back to client
+var_dump($result);
 
 
 

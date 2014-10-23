@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Classes\Xml;
+//namespace Classes\Xml;
 
 /**
  * Description of Xml
@@ -14,5 +14,15 @@ namespace Classes\Xml;
  * @author Shibin
  */
 class Xml {
+    
+    private $xml;
     //put your code here
+    public function Xml($obj) {
+        $this->xml = 
+                '<hello><test>testing xml</test></hello>';
+    }
+    
+    public function getXml() {
+        return $this->xml;
+    }
 }
