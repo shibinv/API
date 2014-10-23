@@ -96,7 +96,7 @@ class API {
             );
         }
         // set json var to the serialized object
-        $this->json = json_encode($str);
+        return json_encode($str);
     }
     
     /*
@@ -143,11 +143,11 @@ class API {
         
         // 
         if ($request == 'department') {
-            $this->json = $this->Dept();
+            $this->Dept();
         } elseif ($request == 'course') {
-            $this->json = $this->Course($value);
+            $this->Course($value);
         } elseif ($request == 'section') {
-            $this->json = $this->Section($value);
+            $this->Section($value);
         } else {
             $this->json = $this->Error('Unknown Request');
         }
@@ -165,6 +165,6 @@ class API {
         }
         // return as a json string
         var_dump($result);
-        return $this->SerializeJSON($result);
+        $this->json = $this->SerializeJSON($result);
     }
 }
