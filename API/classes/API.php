@@ -164,7 +164,7 @@ class API {
             $result = $this->Error($ex->getMessage());
         }
         // return as a json string
-        var_dump($result);
+        //var_dump($result);
         $this->json = $this->SerializeJSON($result);
     }
 }

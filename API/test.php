@@ -33,7 +33,7 @@ $api->debug = true;
 // return json string back to client
 $result = $api->find($request, $value);
 echo $result;
-var_dump($result);
+//var_dump($result);
 
 
 
