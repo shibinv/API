@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+@author: Navsquire Team Members
 -->
 <html>
     <head>
@@ -10,10 +8,9 @@ and open the template in the editor.
         <title></title>
     </head>
     <body>
-        <?php
-        // put your code here
-        echo "test";
-        echo "test2";
-        ?>
+        <p>
+            Welcome to the Hawknest Project.<br>
+            See documentation for details on how to access this server.
+        </p>
     </body>
 </html>

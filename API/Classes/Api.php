@@ -1,11 +1,10 @@
 <?php
-
 /**
  * API Class
- * procceses requests and returns JSON
- *
+ * 
  * @author Navsquire Team Members
  */
+
 //namespace Classes\Api;
 
 class Api {

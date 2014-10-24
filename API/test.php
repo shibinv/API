@@ -1,4 +1,8 @@
 <?php
+/*
+ * @author: Navsquire Team Members
+ */
+
 require_once('Classes/Api.php');
 require_once('Classes/Json.php');
 require_once('Classes/Xml.php');
