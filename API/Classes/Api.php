@@ -113,8 +113,13 @@ class Api {
      * based on input string
      */
     protected function Search($str) {
-        //$sql = "SELECT room_number,  FROM full_course WHERE dept_subject = '$str'";
-        //$this->Query($sql);
+        $sql = "SELECT * FROM full_course WHERE "
+                . "course_name = '$str' OR "
+                . "fac_last_name = '$str' OR "
+                . "fac_last_first = '$str' OR "
+                . "fac_last_first = '$str' OR "
+                . "class_number = '$str' OR ";
+        $this->Query($sql);
     }
     
     /*
@@ -126,7 +131,7 @@ class Api {
         if ($str != '') {
             $sql .= " WHERE dept_subject = '$str'";
         }
-        $sql .= " ORDER BY course_number"; // sort them so its easier to read
+        $sql .= " GROUP BY course_number ORDER BY course_number"; // sort them so its easier to read
         $this->Query($sql);
     }
     
