@@ -68,6 +68,8 @@ class Api {
             $this->Room($value);
         } elseif ($request == 'detail') {
             $this->Detail($value);
+        } elseif ($request == 'search') {
+            $this->Search($value);
         }else { // set error if request is invalid
             $this->Error('Unknown Request');
         }
