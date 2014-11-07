@@ -117,9 +117,10 @@ class Api {
     protected function Search($str) {
         $sql = "SELECT * FROM full_course WHERE "
                 . "course_name = '$str' OR "
+                . "course_number = '$str' OR "
                 . "fac_last_name = '$str' OR "
-                . "fac_last_first = '$str' OR "
-                . "fac_last_first = '$str' OR "
+                . "fac_first_name = '$str' OR "
+                . "room_number = '$str' OR "
                 . "class_number = '$str' "
                 . "ORDER BY class_number";
         $this->Query($sql);
