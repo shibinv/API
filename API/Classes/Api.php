@@ -120,7 +120,8 @@ class Api {
                 . "fac_last_name = '$str' OR "
                 . "fac_last_first = '$str' OR "
                 . "fac_last_first = '$str' OR "
-                . "class_number = '$str' OR ";
+                . "class_number = '$str' "
+                . "ORDER BY class_number";
         $this->Query($sql);
     }
     
