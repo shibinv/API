@@ -90,11 +90,11 @@ class Api {
      * Returns an object of the room's location from the database 
      * based on input string
      */
-    protected function Room($class) {
-        if ($class == '') {
-            $this->Error('Room Request must contain value={classnumber}');
+    protected function Room($room) {
+        if ($room == '') {
+            $this->Error('Room Request must contain value={roomnumber}');
         } else {
-            $sql = "SELECT room_xval, room_yval, room_number FROM full_course WHERE class_number = '$class'";
+            $sql = "SELECT room_xval, room_yval, room_number FROM room WHERE room_number = '$room'";
             $this->Query($sql);
         }
     }
