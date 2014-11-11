@@ -70,7 +70,9 @@ class Api {
             $this->Detail($value);
         } elseif ($request == 'search') {
             $this->Search($value);
-        }else { // set error if request is invalid
+        } elseif ($request == 'poi') {
+            $this->Poi($value);
+        } else { // set error if request is invalid
             $this->Error('Unknown Request');
         }
     }
@@ -115,7 +117,7 @@ class Api {
      * based on input string
      */
     protected function Search($str) {
-        $str = preg_replace('/ /', '%', $str); // replace space with wildcard
+        $str = str_replace(' ', '%', $str); // replace space with wildcard
         
         $sql = "SELECT * FROM full_course WHERE "
                 . "course_name like '%$str%' OR "
@@ -126,6 +128,11 @@ class Api {
                 . "dept_subject like '%$str%' OR "
                 . "class_number like '%$str%' "
                 . "ORDER BY class_number";
+        $this->Query($sql);
+    }
+    
+    protected function Poi($str) {
+        $sql = "SELECT * FROM poi WHERE poi_name LIKE '%$str%' ORDER BY poi_name";
         $this->Query($sql);
     }
     
