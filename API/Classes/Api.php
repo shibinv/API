@@ -157,7 +157,7 @@ class Api {
         if ($department == '' || $course == '') {
             $this->Error('Section Request must contain value={department}, and value2={coursenumber}');
         } else {
-            $sql = "SELECT course_section, class_number FROM full_course WHERE dept_subject ='$department'"
+            $sql = "SELECT course_section, class_number, room_number FROM full_course WHERE dept_subject ='$department'"
                     . " AND course_number = '$course' ORDER BY course_section";
             $this->Query($sql);
         }
