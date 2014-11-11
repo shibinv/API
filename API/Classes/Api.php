@@ -128,7 +128,7 @@ class Api {
                 . "dept_subject like '%$str%' OR "
                 . "class_number like '%$str%' "
                 . "ORDER BY class_number";
-        echo $str; die;
+        echo $sql; die;
         $this->Query($sql);
     }
     
