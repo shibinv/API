@@ -94,7 +94,7 @@ class Api {
         if ($room == '') {
             $this->Error('Room Request must contain value={roomnumber}');
         } else {
-            $sql = "SELECT room_xval, room_yval, room_number FROM room WHERE room_number = '$room'";
+            $sql = "SELECT room_xval, room_yval, room_number, door_x, door_y FROM room WHERE room_number = '$room'";
             $this->Query($sql);
         }
     }
