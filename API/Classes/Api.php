@@ -118,7 +118,7 @@ class Api {
      */
     protected function Search($str) {
         $str = str_replace(" ", "%",  $str); // replace space with wildcard
-        echo $str; die;
+       // echo $str; die;
         $sql = "SELECT * FROM full_course WHERE "
                 . "course_name like '%".$str."%' OR "
                 . "course_number like '%".$str."%' OR "
@@ -128,7 +128,7 @@ class Api {
                 . "dept_subject like '%".$str."%' OR "
                 . "class_number like '%".$str."%' "
                 . "ORDER BY class_number";
-
+        echo $sql; die;
         $this->Query($sql);
     }
     
